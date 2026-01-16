@@ -45,11 +45,27 @@ test1072 =
       property $ forAll (choose (1, 10000)) $ \x -> 
         x == (length $ twoKnightsSolve x) 
 
-  
+test2183 :: Spec 
+test2183 = 
+  describe "2183 - Missing Coin Sum" $ do 
+    it "0 Test - Return 1 for x:xs where x > 1" $ do 
+      missingCoinSumSolve [2] `shouldBe` 1
+
+    it "1 Test - Example" $ do 
+      missingCoinSumSolve [2, 9, 1, 2, 7] `shouldBe` 6
+
+    it "2 Test - Random nums" $ do 
+      property $ \arr -> 
+        let positiveArr = map abs arr 
+            res = missingCoinSumSolve positiveArr
+        in res >= 1 && res <= (sum positiveArr + 1)
+
+
 
 main :: IO ()
 main = hspec $ do
   test1621 
   test1068
   test1072
+  test2183
 

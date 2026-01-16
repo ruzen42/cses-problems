@@ -4,6 +4,7 @@ module Lib
     , weirdAlgoSolve''
     , distinctNumsSolve
     , twoKnightsSolve
+    , missingCoinSumSolve
     ) where
 
 import Data.List (sort, group) 
