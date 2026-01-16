@@ -41,7 +41,16 @@ twoKnightsSolve :: Int -> [Int]
 twoKnightsSolve k = map solve [1..k]
   where 
     solve :: Int -> Int 
-    solve k = (k^4 - 9*k^2 + 24*k - 16) `div` 2
+    solve k = (k^4 - 9 * k^2 + 24 * k - 16) `div` 2
+
+missingCoinSumSolve :: [Int] -> Int 
+missingCoinSumSolve arr =  
+  let sorted = sort arr
+      solve currrentTarget [] = currrentTarget 
+      solve currrentTarget (x:xs)
+        | x > currrentTarget = currrentTarget
+        | otherwise          = solve (currrentTarget + x) xs
+  in solve 1 sorted
 
 
 
