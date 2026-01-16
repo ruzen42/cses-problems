@@ -2,7 +2,11 @@ module Lib
     ( weirdAlgoSolve
     , weirdAlgoSolve'
     , weirdAlgoSolve''
+    , distinctNumsSolve
+    , twoKnightsSolve
     ) where
+
+import Data.List (sort, group) 
 
 weirdAlgoSolve :: Int -> [Int]
 weirdAlgoSolve input = 
@@ -29,3 +33,15 @@ weirdAlgoSolve'' n = go n []
   where go 1 acc = reverse (1 : acc)
         go x acc | even x = go (x `div` 2) (x : acc)
                  | otherwise = go (x * 3 + 1) (x : acc)
+
+distinctNumsSolve :: [Int] -> Int 
+distinctNumsSolve arr = length $ group $ sort arr 
+      
+twoKnightsSolve :: Int -> [Int]
+twoKnightsSolve k = map solve [1..k]
+  where 
+    solve :: Int -> Int 
+    solve k = (k^4 - 9*k^2 + 24*k - 16) `div` 2
+
+
+
