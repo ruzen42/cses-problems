@@ -5,6 +5,7 @@ module Lib
     , distinctNumsSolve
     , twoKnightsSolve
     , missingCoinSumSolve
+    , missingNumberSolve
     ) where
 
 import Data.List (sort, group) 
@@ -53,5 +54,10 @@ missingCoinSumSolve arr =
         | otherwise          = solve (currrentTarget + x) xs
   in solve 1 sorted
 
+missingNumberSolve :: Int -> [Int] -> Int 
+missingNumberSolve n xs = expectedSum - actualSum
+  where 
+    actualSum   = sum xs
+    expectedSum = (n * (n + 1)) `div` 2
 
-
+    

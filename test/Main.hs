@@ -3,6 +3,7 @@ module Main (main) where
 import Test.Hspec
 import Lib
 import Test.QuickCheck
+import Data.List (delete)
 
 test1621 :: Spec 
 test1621 = 
@@ -60,6 +61,31 @@ test2183 =
             res = missingCoinSumSolve positiveArr
         in res >= 1 && res <= (sum positiveArr + 1)
 
+data MissingTask = MissingTask Int Int deriving (Show)
+
+instance Arbitrary MissingTask where
+  arbitrary = do
+    n <- choose (2, 1000)
+    missing <- choose (1, n)
+    return $ MissingTask n missing
+
+test1083 :: Spec 
+test1083 = 
+  describe "1083 - Missing Number" $ do 
+    it "0 Test - Return 1 for 2 [2]" $ do 
+      missingNumberSolve 2 [2] `shouldBe` 1
+
+    it "1 Test - Example" $ do 
+      missingNumberSolve 5 [2, 3, 1, 5] `shouldBe` 4
+
+    it "2 Test - Random nums" $ 
+      property $ \(MissingTask n missing) ->
+        let fullList = [1..n]
+            shortList = delete missing fullList
+        in  missingNumberSolve n shortList == missing
+
+    it "3 Test - Some" $ do 
+      missingNumberSolve 6 [2, 3, 1, 5, 6] `shouldBe` 4
 
 
 main :: IO ()
@@ -68,4 +94,5 @@ main = hspec $ do
   test1068
   test1072
   test2183
+  test1083
 
