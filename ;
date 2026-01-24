@@ -5,11 +5,6 @@ module Lib
     , distinctNumsSolve
     , twoKnightsSolve
     , missingCoinSumSolve
-<<<<<<< HEAD
-    , missingNumberSolve
-=======
-    , apartmentsSolve
->>>>>>> f87cc87 (fix)
     ) where
 
 import Data.List (sort, group) 
@@ -53,33 +48,28 @@ missingCoinSumSolve :: [Int] -> Int
 missingCoinSumSolve arr =  
   let sorted = sort arr
       solve xs [] = xs 
-      solve xs (x:ys)
+      solve xs (x:xs)
         | x > xs = xs
-        | otherwise          = solve (xs + x) ys
+        | otherwise          = solve (xs + x) xs
   in solve 1 sorted
 
-<<<<<<< HEAD
-missingNumberSolve :: Int -> [Int] -> Int 
-missingNumberSolve n xs = expectedSum - actualSum
-  where 
-    actualSum   = sum xs
-    expectedSum = (n * (n + 1)) `div` 2
-
-    
-=======
 apartmentsSolve :: Int -> [Int] -> [Int] -> Int
-apartmentsSolve k mans apart = go sortedA sortedB 
+apartmentsSolve k mans apart = sum $ map (solve (k sortedA)) sortedB
   where 
     sortedA, sortedB :: [Int]
     sortedA = sort mans
     sortedB = sort apart
 
-    go [] _ = 0
-    go _ [] = 0
+    solve :: Int -> [Int] -> Int -> Int
+    solve k aparts man = sum $ boolListToInt $ map $ solveS (k man) aparts 
 
-    go (m:ms) (a:as) 
-      | m < a - k = go ms (a:as)
-      | m > a + k = go (m:ms) as
-      | otherwise = 1 + go ms as 
+    solveS :: Int -> Int -> Int -> Bool
+    solveS k man apart = man >= apart - k && man <= apart + k
+
+    boolListToInt :: [Bool] -> [Int]
+    boolListToInt xs = map boolToInt xs
+
+    boolToInt :: Bool -> Int 
+    boolToInt a = if a then 1 else 0 
+
   
->>>>>>> f87cc87 (fix)
